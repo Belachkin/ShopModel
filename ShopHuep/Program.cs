@@ -1,4 +1,6 @@
 ﻿using ShopHuep;
+using ShopModel;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using static System.Console;
 using static System.Formats.Asn1.AsnWriter;
@@ -15,40 +17,91 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 "3 Просмотр корзины\n" +
                 "4 Оформить заказ\n" +
                 "5 Список заказов";
-
-            string[] lines = Regex.Split(text, "\r\n|\r|\n");
-
-            int left = 0;      
-            int top = 0;
-
-            int center = WindowWidth / 2;
-
-            for (int i = 0; i < lines.Length; i++)
-            {
-                
-                left = center - (lines[i].Length / 2);
-
-                SetCursorPosition(left, top);
-                
-                WriteLine(lines[i]);
-
-                top = CursorTop;
-            }
+           
 
             Store store = new Store();
-            
 
 
-            UserConsol(store);
-            
+            Authentication(store);
 
 
         }
 
-        
-        public static void UserConsol(Store store)
+        public static void Authentication(Store store)
         {
             
+            WriteLine("1 - Вход\n2 - Регистрация");
+
+            string answer = ReadLine();
+
+            switch(answer)
+            {
+                case "1":
+
+                    Write("Username: ");
+                    string username = ReadLine();
+
+                    Write("Password: ");
+                    string password = ReadLine();
+
+                    
+
+                    if (store.Users.Any(x => x.Username == username && x.Password == password))
+                    {
+                        User user = store.Users.First(x => x.Username == username && x.Password == password);
+                        
+                        if(user.Role == "User")
+                        {
+                            UserConsol(store, user);
+                        }
+                        else if(user.Role == "Admin")
+                        {
+                            AdminConsol(store, user);
+                        }
+                        
+                    }
+
+                    break;
+
+                case "2":
+                    WriteLine("Регистрация");
+
+                    Write("Username: ");
+                    username = ReadLine();
+
+                    Write("Password: ");
+                    password = ReadLine();
+
+                    Write("LastName: ");
+                    string lastname = ReadLine();
+
+                    Write("FirstName: ");
+                    string firstname = ReadLine();
+
+                    Write("MiddleName: ");
+                    string middlename = ReadLine();
+
+                    Write("Address: ");
+                    string address = ReadLine();
+
+                    
+
+                    User newUser = new User(username, lastname, firstname, middlename, "User", address, password);
+
+                    WriteLine($"Аккаунт {newUser.Username} зарегестрирован\nТеперь можете войти в аккаунт");
+
+                    break;
+
+                default:
+                    WriteLine("Ошибка введения данных");
+                    break;
+            }
+        }
+        public static void UserConsol(Store store, User user)
+        {
+
+            WriteLine($"Вы успешно вышли в аккаунт - {user.Username}");
+
             Cart cart = new Cart();
 
             for (; ; )
@@ -119,7 +172,9 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 }
             }
         }
+        public static void AdminConsol(Store store, User user)
+        {
 
-        
+        }
     }
 }
