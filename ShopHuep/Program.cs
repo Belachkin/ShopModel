@@ -10,15 +10,23 @@ namespace MyApp // Note: actual namespace depends on the project name.
     internal class Program
     {
         static void Main(string[] args)
-        {        
-            string text = "Добро пожаловать в онлайн магазин\nИмени Рикардо Милоса\nСписок команд которые вы можите использовать:\n " +
-                "1 Просмотр списка товаров\n " +
-                "2 Добавить товар в корзину\n" +
-                "3 Просмотр корзины\n" +
-                "4 Оформить заказ\n" +
-                "5 Список заказов";
-           
+        {
+            
 
+            WriteLine("░██████╗██╗░░██╗███╗░░░███╗███████╗██╗░░░░░░░░░░░░░░░▄/▄/▄░░░░░░░░░██████╗████████╗░█████╗░██████╗░███████╗");
+            Thread.Sleep(200);
+            WriteLine("██╔════╝██║░░██║████╗░████║██╔════╝██║░░░░░░░░░░▐▀▄░▐▄█▄▌░▄▀▌░░░░░██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██╔════╝");
+            Thread.Sleep(200);
+            WriteLine("╚█████╗░███████║██╔████╔██║█████╗░░██║░░░░░░░░░░▐──▀─▀▀▀─▀──▌░░░░░╚█████╗░░░░██║░░░██║░░██║██████╔╝█████╗░░");
+            Thread.Sleep(200);
+            WriteLine("░╚═══██╗██╔══██║██║╚██╔╝██║██╔══╝░░██║░░░░░░░░░░░▀▄▄▀▀▀▀▀▄▄▀░░░░░░░╚═══██╗░░░██║░░░██║░░██║██╔══██╗██╔══╝░░");
+            Thread.Sleep(200);
+            WriteLine("██████╔╝██║░░██║██║░╚═╝░██║███████╗███████╗░░░░░░░░░▀▀▀▀▀░░░░░░░░░██████╔╝░░░██║░░░╚█████╔╝██║░░██║███████╗");
+            Thread.Sleep(200);
+            WriteLine("╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝╚══════╝░░░░░░░░░░▀█▀░░░░░░░░░░╚═════╝░░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝╚══════╝");
+
+            
+            
             Store store = new Store();
 
 
@@ -29,78 +37,90 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
         public static void Authentication(Store store)
         {
-            
-            WriteLine("1 - Вход\n2 - Регистрация");
-
-            string answer = ReadLine();
-
-            switch(answer)
+            for(; ; )
             {
-                case "1":
+                WriteLine("1 - Вход\n2 - Регистрация");
 
-                    Write("Username: ");
-                    string username = ReadLine();
+                string answer = ReadLine();
 
-                    Write("Password: ");
-                    string password = ReadLine();
+                switch (answer)
+                {
+                    case "1":
 
-                    
+                        Write("Username: ");
+                        string username = ReadLine();
 
-                    if (store.Users.Any(x => x.Username == username && x.Password == password))
-                    {
-                        User user = store.Users.First(x => x.Username == username && x.Password == password);
-                        
-                        if(user.Role == "User")
+                        Write("Password: ");
+                        string password = ReadLine();
+
+
+
+                        if (store.Users.Any(x => x.Username == username && x.Password == password))
                         {
-                            UserConsol(store, user);
+                            User user = store.Users.First(x => x.Username == username && x.Password == password);
+
+                            if (user.Role == "User")
+                            {
+                                UserConsol(store, user);
+                            }
+                            else if (user.Role == "Admin")
+                            {
+                                AdminConsol(store, user);
+                            }
+
                         }
-                        else if(user.Role == "Admin")
-                        {
-                            AdminConsol(store, user);
-                        }
-                        
-                    }
 
-                    break;
+                        break;
 
-                case "2":
-                    WriteLine("Регистрация");
+                    case "2":
+                        WriteLine("Регистрация");
 
-                    Write("Username: ");
-                    username = ReadLine();
+                        Write("Username: ");
+                        username = ReadLine();
 
-                    Write("Password: ");
-                    password = ReadLine();
+                        Write("Password: ");
+                        password = ReadLine();
 
-                    Write("LastName: ");
-                    string lastname = ReadLine();
+                        Write("LastName: ");
+                        string lastname = ReadLine();
 
-                    Write("FirstName: ");
-                    string firstname = ReadLine();
+                        Write("FirstName: ");
+                        string firstname = ReadLine();
 
-                    Write("MiddleName: ");
-                    string middlename = ReadLine();
+                        Write("MiddleName: ");
+                        string middlename = ReadLine();
 
-                    Write("Address: ");
-                    string address = ReadLine();
+                        Write("Address: ");
+                        string address = ReadLine();
 
-                    
 
-                    User newUser = new User(username, lastname, firstname, middlename, "User", address, password);
 
-                    WriteLine($"Аккаунт {newUser.Username} зарегестрирован\nТеперь можете войти в аккаунт");
+                        User newUser = new User(username, lastname, firstname, middlename, "User", address, password);
+                        store.Users.Add(newUser);
 
-                    break;
 
-                default:
-                    WriteLine("Ошибка введения данных");
-                    break;
+                        WriteLine($"Аккаунт {newUser.Username} зарегестрирован\nТеперь можете войти в аккаунт");
+
+                        break;
+
+                    default:
+                        WriteLine("Ошибка введения данных");
+                        break;
+                }
             }
+            
         }
         public static void UserConsol(Store store, User user)
         {
 
             WriteLine($"Вы успешно вышли в аккаунт - {user.Username}");
+
+            WriteLine("\n\n\nСписок команд которые вы можите использовать:\n " +
+                "1 Просмотр списка товаров\n " +
+                "2 Добавить товар в корзину\n" +
+                "3 Просмотр корзины\n" +
+                "4 Оформить заказ\n" +
+                "5 Список заказов"); 
 
             Cart cart = new Cart();
 
