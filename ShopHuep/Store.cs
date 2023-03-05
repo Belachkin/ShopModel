@@ -54,7 +54,7 @@ namespace ShopHuep
             }
             else
             {
-                for (int i = 0; i < Orders.Count; i++)
+                for (int i = 0; i < userOrders.Count; i++)
                 {
                     int orderValue  = 0;
                     Console.WriteLine($"[{i}] {user.Username} | {user.Address}");

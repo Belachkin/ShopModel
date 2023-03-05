@@ -130,7 +130,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 "2 Добавить товар в корзину\n" +
                 "3 Просмотр корзины\n" +
                 "4 Оформить заказ\n" +
-                "5 Список заказов"); 
+                "5 Список заказов\n" +
+                "exit - выйти из аккунта"); 
 
             Cart cart = new Cart();
 
@@ -176,11 +177,19 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                     case "4":
 
-                        Order order = new Order(user, cart.CartList);
+                        if(cart.CartList.Count <= 0)
+                        {
+                            WriteLine("Корзина пуста - не возможно оформить заказ :c");
+                        }
+                        else
+                        {
+                            Order order = new Order(user, cart.CartList);
 
-                        store.PlaceAnOrder(order);
+                            store.PlaceAnOrder(order);
 
-                        WriteLine("Заказ оформлен");
+                            WriteLine("Заказ оформлен");
+                        }
+                        
 
                         break;
 
@@ -189,6 +198,11 @@ namespace MyApp // Note: actual namespace depends on the project name.
                         store.ShowOrdersList(user);
                         break;
 
+                    case "exit":
+                        WriteLine($"Выход из аккунта {user.Username}");
+                        Authentication(store);
+
+                        break;
                     default:
 
                         WriteLine("Введите доступный номер команды");
