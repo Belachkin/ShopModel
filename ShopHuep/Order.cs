@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShopModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,14 +9,12 @@ namespace ShopHuep
 {
     internal class Order
     {
-        public string ClientName;
-        public string Address;
+        public User User;
         public List<CartItem> Products;
 
-        public Order(string clientName, string address, List<CartItem> products)
+        public Order(User user,  List<CartItem> products)
         {
-            ClientName = clientName;
-            Address = address;
+            User = user;         
             Products = products;
         }
 

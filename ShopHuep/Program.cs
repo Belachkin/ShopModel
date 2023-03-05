@@ -96,6 +96,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
 
                         User newUser = new User(username, lastname, firstname, middlename, "User", address, password);
+                       
                         store.Users.Add(newUser);
 
 

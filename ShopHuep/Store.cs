@@ -44,10 +44,11 @@ namespace ShopHuep
             Orders.Add(newOrder);
         }
 
-        public void ShowOrdersList()
+        public void ShowOrdersList(User user)
         {
-            
-            if(Orders.Count <= 0)
+            List<Order> userOrders = GetUserOrders(user);
+
+            if(userOrders.Count <= 0)
             {
                 Console.WriteLine("Список заказов пуст");
             }
@@ -56,22 +57,38 @@ namespace ShopHuep
                 for (int i = 0; i < Orders.Count; i++)
                 {
                     int orderValue  = 0;
-                    Console.WriteLine($"[{i}] {Orders[i].ClientName} | {Orders[i].Address}");
+                    Console.WriteLine($"[{i}] {user.Username} | {user.Address}");
 
 
-                    for (int j = 0; j < Orders[i].Products.Count; j++)
+                    for (int j = 0; j < userOrders[i].Products.Count; j++)
                     {
-                        orderValue += Orders[i].Products[j].Product.Price * Orders[i].Products[j].Count;
-                        Console.WriteLine($"       [{j}] {Orders[i].Products[j].Product.Name} {Orders[i].Products[j].Count} шт. {Orders[i].Products[j].Product.Price}р/шт");
+                        orderValue += userOrders[i].Products[j].Product.Price * userOrders[i].Products[j].Count;
+                        Console.WriteLine($"       [{j}] {userOrders[i].Products[j].Product.Name} {userOrders[i].Products[j].Count} шт. {userOrders[i].Products[j].Product.Price}р/шт");
                                      
                     }
 
 
-                    Console.WriteLine($"Общее сумма заказа: {orderValue}");
+                    Console.WriteLine($"Общая сумма заказа: {orderValue}");
                 }
             }
             
             
+        }
+
+        public List<Order> GetUserOrders(User user)
+        {
+
+            List<Order> userOrders = new List<Order>();
+
+            foreach (var item in Orders)
+            {
+                if(item.User.Username == user.Username)
+                {
+                    userOrders.Add(item);
+                }
+            }
+
+            return userOrders;
         }
     }
 }
