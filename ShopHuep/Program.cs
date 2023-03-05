@@ -108,10 +108,20 @@ namespace MyApp // Note: actual namespace depends on the project name.
                        
                         //TODO: Добавить проверку уникальности unsername
 
-                        store.Users.Add(newUser);
+                        if(store.CheckUniquenessUsername(newUser) == true)
+                        {
+                            store.Users.Add(newUser);
+                            WriteLine($"Аккаунт {newUser.Username} зарегестрирован\nТеперь можете войти в аккаунт");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Пользователь Username - {newUser.Username} уже существует");
+                        }
+
+                        
 
 
-                        WriteLine($"Аккаунт {newUser.Username} зарегестрирован\nТеперь можете войти в аккаунт");
+                       
 
                         break;
 
@@ -234,7 +244,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                     break;
                 case "2": break;
-
+                    //TODO: Добавить/Удалить товар
                 case "3":
                     WriteLine("Список всех заказов в магазине");
                     store.ShowOrdersList();

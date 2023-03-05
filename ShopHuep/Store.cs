@@ -101,6 +101,17 @@ namespace ShopHuep
             
         }
 
+        public bool CheckUniquenessUsername(User user)
+        {
+            if (Users.Any(x => x.Username.ToLower() == user.Username.ToLower())) {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public List<Order> GetUserOrders(User user)
         {
 
