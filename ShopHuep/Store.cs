@@ -44,7 +44,33 @@ namespace ShopHuep
             Orders.Add(newOrder);
         }
 
-        public void ShowOrdersList(User user)
+        public void ShowOrdersList()
+        {
+            if (Orders.Count <= 0)
+            {
+                Console.WriteLine("Список заказов пуст");
+            }
+            else
+            {
+                for (int i = 0; i < Orders.Count; i++)
+                {
+                    int orderValue = 0;
+                    Console.WriteLine($"[{i}] {Orders[i].User.Username} | {Orders[i].User.Address}");
+
+
+                    for (int j = 0; j < Orders[i].Products.Count; j++)
+                    {
+                        orderValue += Orders[i].Products[j].Product.Price * Orders[i].Products[j].Count;
+                        Console.WriteLine($"       [{j}] {Orders[i].Products[j].Product.Name} {Orders[i].Products[j].Count} шт. {Orders[i].Products[j].Product.Price}р/шт");
+
+                    }
+
+
+                    Console.WriteLine($"Общая сумма заказа: {orderValue}");
+                }
+            }
+        }
+        public void ShowUserOrdersList(User user)
         {
             List<Order> userOrders = GetUserOrders(user);
 

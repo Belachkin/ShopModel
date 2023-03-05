@@ -81,7 +81,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                         break;
 
-                    case "2":
+                    case "2": 
                         WriteLine("Регистрация");
 
                         Write("Username: ");
@@ -106,6 +106,8 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                         User newUser = new User(username, lastname, firstname, middlename, "User", address, password);
                        
+                        //TODO: Добавить проверку уникальности unsername
+
                         store.Users.Add(newUser);
 
 
@@ -176,7 +178,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                         break;
 
                     case "4":
-
+                        //TODO: Больше взаимодействий с корзиной
                         if(cart.CartList.Count <= 0)
                         {
                             WriteLine("Корзина пуста - не возможно оформить заказ :c");
@@ -195,7 +197,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                     case "5":
                         WriteLine("Список заказов");
-                        store.ShowOrdersList(user);
+                        store.ShowUserOrdersList(user);
                         break;
 
                     case "exit":
@@ -205,7 +207,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                         break;
                     default:
 
-                        WriteLine("Введите доступный номер команды");
+                        WriteLine("Введите доступную команду");
 
                         break;
                 }
@@ -213,7 +215,42 @@ namespace MyApp // Note: actual namespace depends on the project name.
         }
         public static void AdminConsol(Store store, User user)
         {
+            WriteLine("Вы вошли в Админку");
+            WriteLine("Список команд:\n" +
+                " 1 - Список товаров\n" +
+                " 2 - Добавить/Удалить Товар\n" +
+                " 3 - Список всех заказов\n" +
+                " exit - выход из аккунта");
 
+            Write("\n: ");
+            string answer = ReadLine();
+
+            switch (answer)
+            {
+
+                case "1":
+
+                    store.ShowCatalog();
+
+                    break;
+                case "2": break;
+
+                case "3":
+                    WriteLine("Список всех заказов в магазине");
+                    store.ShowOrdersList();
+                    
+                    break;
+                case "exit":
+
+                    WriteLine($"Выход из аккунта {user.Username}");
+                    Authentication(store);
+
+                    break;
+
+
+                default: WriteLine("Введите доступную команду"); break;
+
+            }
         }
     }
 }
