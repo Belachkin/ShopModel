@@ -167,12 +167,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                     case "4":
 
-                        Write("Ваше имя: ");
-                        string name = ReadLine();
-                        Write("Адресс доставки: ");
-                        string address = ReadLine();
-
-                        Order order = new Order(name, address, cart.CartList);
+                        Order order = new Order(user, cart.CartList);
 
                         store.PlaceAnOrder(order);
 
@@ -182,7 +177,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                     case "5":
                         WriteLine("Список заказов");
-                        store.ShowOrdersList();
+                        store.ShowOrdersList(user);
                         break;
 
                     default:
