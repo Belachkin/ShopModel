@@ -147,7 +147,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
             for (; ; )
             {
 
-                Write("\n: ");
+                Write($"\n{user.Username}: ");
                 string answer = ReadLine();
 
                 switch (answer)
@@ -239,7 +239,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
                 " 3 - Список всех заказов\n" +
                 " exit - выход из аккунта");
 
-            Write("\n: ");
+            Write("\nAdmin: ");
             string answer = ReadLine();
 
             switch (answer)
