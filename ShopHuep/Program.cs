@@ -17,7 +17,6 @@ namespace MyApp // Note: actual namespace depends on the project name.
             
             Store store = new Store();
 
-
             Authentication(store);
 
 
@@ -106,7 +105,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                         User newUser = new User(username, lastname, firstname, middlename, "User", address, password);
                        
-                        //TODO: Добавить проверку уникальности unsername
+                        
 
                         if(store.CheckUniquenessUsername(newUser) == true)
                         {
@@ -120,9 +119,7 @@ namespace MyApp // Note: actual namespace depends on the project name.
 
                         
 
-
-                       
-
+                     
                         break;
 
                     default:
@@ -162,33 +159,43 @@ namespace MyApp // Note: actual namespace depends on the project name.
                         break;
                     case "2":
 
-                        Write("Введите номер товара из списка который хотите добавить в корзину: ");
-                        answer = ReadLine();
-                        int productId = Convert.ToInt32(answer);
-
-                        if (productId <= store.Products.Count)
+                        try
                         {
-                            Write("\nВведите кол-во товара: ");
+                            Write("Введите номер товара из списка который хотите добавить в корзину: ");
                             answer = ReadLine();
-                            int countProduct = Convert.ToInt32(answer);
+                            int productId = Convert.ToInt32(answer);
 
-                            cart.AddProductToCart(store.Products[productId], countProduct);
+                            if (productId <= store.Products.Count)
+                            {
+                                Write("\nВведите кол-во товара: ");
+                                answer = ReadLine();
+                                int countProduct = Convert.ToInt32(answer);
+
+                                cart.AddProductToCart(store.Products[productId], countProduct);
+                            }
+                            else
+                            {
+                                WriteLine("Такого порядкового номера не существует");
+                            }
                         }
-                        else
+                        catch
                         {
-                            WriteLine("Такого порядкового номера не существует");
+                            WriteLine("Введите номер а символ");
                         }
+                        
 
                         break;
 
                     case "3":
-
+                        //TODO: Больше взаимодействий с корзиной
                         cart.ShowCartList();
+
+
 
                         break;
 
                     case "4":
-                        //TODO: Больше взаимодействий с корзиной
+                        
                         if(cart.CartList.Count <= 0)
                         {
                             WriteLine("Корзина пуста - не возможно оформить заказ :c");
